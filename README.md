@@ -50,7 +50,7 @@ systemctl restart gitlab-ce
 sudo nano /etc/apache2/sites-enabled/gitlab.conf
 ```
 #### default data is store in /var/opt/gitlab/git-data
-```json
+```ruby
 git_data_dirs({ "default" => { "path" => "/mnt/nas/git-data" } })
 ```
 
@@ -105,7 +105,7 @@ systemctl start mariadb
 #### config nextcloud host
 sudo nano /etc/apache2/apache2.conf 
 
-```
+```xml
 Alias /nextcloud /var/www/nextcloud
 <Directory /var/www/nextcloudo>
   Options +FollowSymlinks
@@ -172,7 +172,7 @@ sudo dpkg -i /path/to/package.deb
 ```
 #### change source
 sudo nano /etc/docker/daemon.json
-```json
+```js
 {
 	"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
@@ -214,13 +214,15 @@ services:
 -------
 
 ## Expose SSH connexion
+edit `sshd_config` 
 ```
 sudo nano /etc/ssh/sshd_config
 ```
-
+add 
 ```
-+ PermitRootLogin yes
+ PermitRootLogin yes
 ```
+run
 ```
 sudo systemctl restart ssh
 ```
@@ -234,7 +236,7 @@ apt install libcups2 samba samba-common cups
 nano /etc/samba/smb.conf
 ```
 
-````conf
+````properties
 [global]
 workgroup = WORKGROUP
 server string = Samba Server %v
@@ -281,6 +283,26 @@ sudo apt-get install -y nodejs gcc g++ make
 npm config set registry https://registry.npm.taobao.org
 ```
 
+------------
+
+## Test Performance with Sysbench
+```sh
+apt-get install sysbench
+```
+#### test CPU 1 thread (J1900:17sec)
+```
+sysbench --test=cpu --cpu-max-prime=10000 run
+```
+#### test CPU 4 thread (J1900:30sec)
+```
+sysbench --test=cpu --cpu-max-prime=40000 --num-threads=4 run
+```
+#### test file IO with 100G
+```
+sysbench --test=fileio --file-total-size=100G prepare
+
+sysbench --test=fileio --file-total-size=100G --file-test-mode=rndrw --init-rng=on --max-time=100 --max-requests=0 run
+```
 
 
 
