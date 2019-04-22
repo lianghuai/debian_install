@@ -22,3 +22,25 @@ lvm> lvextend -L +50G pve/data
 ```
 #df -h
 #resize2fs /dev/mapper/pve-root
+```
+------
+
+# Add Physical Drive to VM
+
+### install lshw
+```
+apt install lshw
+```
+
+### show drive id 
+```
+ls -l /dev/disk/by-id/
+```
+
+### add to vm :
+command : 
+```
+qm set <vm-id> --<hd-type-and-number> /dev/disk/by-id/<hd-id>
+#example :
+qm set 101 --sata2 /dev/disk/by-id/ata-ST3250824AS_3ND18NLT
+```
