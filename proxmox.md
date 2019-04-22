@@ -44,3 +44,17 @@ qm set <vm-id> --<hd-type-and-number> /dev/disk/by-id/<hd-id>
 #example :
 qm set 101 --sata2 /dev/disk/by-id/ata-ST3250824AS_3ND18NLT
 ```
+
+---------
+
+# Sleep hard driver if idle 
+### turn off pvestated : 
+```
+pvestatd stop
+```
+test spin down the HDD : 
+```
+hdparm -y /dev/sdb
+```
+
+
